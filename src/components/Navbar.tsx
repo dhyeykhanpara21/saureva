@@ -99,15 +99,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             : 'bg-transparent py-5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
-          {/* SAURÉNA Official Logo */}
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex items-center justify-between">
+          {/* SAURÉNA Official Logo with generous breathing room */}
           <a
             href="#hero"
             onClick={(e) => {
               e.preventDefault();
               handleNavClick('#hero');
             }}
-            className="flex items-center gap-3 group focus:outline-none"
+            className="flex items-center gap-3 group focus:outline-none shrink-0 mr-8 md:mr-12 lg:mr-16 xl:mr-24"
           >
             <img
               src="/assets/saurena_logo_transparent.png"
@@ -117,7 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-8 text-[13px] tracking-widest uppercase font-medium text-saurena-forest/90">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-[12px] xl:text-[13px] tracking-widest uppercase font-medium text-saurena-forest/90">
             {navLinks.map((link) => (
               <a
                 key={link.name}

@@ -35,3 +35,9 @@ Thumbs.db
 # Test outputs
 public/test-screens/
 
+# Graphify
+.agents/rules/graphify.md
+.agents/workflows/graphify.md
+graphify-out/
+
+# Build output
