@@ -123,9 +123,10 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({ isOpen, onClose }) =
                     onChange={(e) => setFormData({ ...formData, packaging: e.target.value })}
                     className="w-full px-4 py-2.5 rounded-xl bg-white/80 border border-saurena-gold/30 text-xs text-saurena-forest focus:outline-none focus:border-saurena-gold transition-colors"
                   >
-                    <option>Both Stand-Up Pouch & Box</option>
+                    <option>All 3 Formats (Foil Pouch, Box & Kraft)</option>
                     <option>Stand-Up Foil Pouch (100g)</option>
                     <option>Artisan Cardboard Box (100g)</option>
+                    <option>Eco Kraft Stand-Up Pouch (100g)</option>
                     <option>Institutional / Bulk Spices</option>
                   </select>
                 </div>

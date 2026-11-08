@@ -48,6 +48,13 @@ export const productDetails: ProductDetails = {
       description:
         'Crafted from high-density rigid kraft cardboard with a signature wax-tab seal. An artisanal gift and pantry collector format celebrating traditional Gujarati packaging elegance.',
       badge: 'Artisan Box'
+    },
+    {
+      id: 'kraft',
+      name: 'Eco Kraft Stand-Up Pouch',
+      description:
+        'Natural unbleached artisan kraft paper pouch with internal food-grade aroma barrier and resealable airtight zip. An earthy, rustic kitchen collectible honoring Saurashtra terroir.',
+      badge: 'Eco Kraft Pouch'
     }
   ]
 };

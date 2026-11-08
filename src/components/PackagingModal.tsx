@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, ZoomIn, Eye, ShieldCheck } from 'lucide-react';
 import { productDetails } from '../data/saurenaData';
 
 interface PackagingModalProps {
   isOpen: boolean;
   onClose: () => void;
-  initialType?: 'pouch' | 'box';
+  initialType?: 'pouch' | 'box' | 'kraft';
 }
 
 export const PackagingModal: React.FC<PackagingModalProps> = ({
@@ -13,10 +13,28 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
   onClose,
   initialType = 'pouch'
 }) => {
-  const [selectedType, setSelectedType] = useState<'pouch' | 'box'>(initialType);
+  const [selectedType, setSelectedType] = useState<'pouch' | 'box' | 'kraft'>(initialType);
   const [activeSide, setActiveSide] = useState<'front' | 'back' | 'gussets'>('front');
 
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedType(initialType);
+      setActiveSide('front');
+    }
+  }, [isOpen, initialType]);
+
   if (!isOpen) return null;
+
+  const getTitle = () => {
+    switch (selectedType) {
+      case 'pouch':
+        return 'Stand-Up Foil Pouch Artwork';
+      case 'box':
+        return 'Cardboard Box Packaging Artwork';
+      case 'kraft':
+        return 'Eco Kraft Stand-Up Pouch Artwork';
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-md animate-fade-in">
@@ -31,7 +49,7 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
               </span>
             </div>
             <h3 className="font-editorial text-2xl font-bold text-saurena-forest">
-              {selectedType === 'pouch' ? 'Stand-Up Foil Pouch Artwork' : 'Cardboard Box Packaging Artwork'}
+              {getTitle()}
             </h3>
           </div>
 
@@ -49,17 +67,23 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
           <div className="flex items-center gap-2">
             <span className="text-saurena-brown/80 font-bold uppercase tracking-wider text-[11px]">Format:</span>
             <button
-              onClick={() => setSelectedType('pouch')}
+              onClick={() => {
+                setSelectedType('pouch');
+                if (activeSide === 'gussets') setActiveSide('front');
+              }}
               className={`px-3 py-1.5 rounded-full font-semibold transition-colors ${
                 selectedType === 'pouch'
                   ? 'bg-saurena-forest text-white'
                   : 'bg-white/60 text-saurena-forest hover:bg-saurena-gold/20'
               }`}
             >
-              Stand-Up Pouch
+              Foil Pouch
             </button>
             <button
-              onClick={() => setSelectedType('box')}
+              onClick={() => {
+                setSelectedType('box');
+                if (activeSide === 'gussets') setActiveSide('front');
+              }}
               className={`px-3 py-1.5 rounded-full font-semibold transition-colors ${
                 selectedType === 'box'
                   ? 'bg-saurena-forest text-white'
@@ -67,6 +91,19 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
               }`}
             >
               Cardboard Box
+            </button>
+            <button
+              onClick={() => {
+                setSelectedType('kraft');
+                if (activeSide === 'gussets') setActiveSide('front');
+              }}
+              className={`px-3 py-1.5 rounded-full font-semibold transition-colors ${
+                selectedType === 'kraft'
+                  ? 'bg-saurena-forest text-white'
+                  : 'bg-white/60 text-saurena-forest hover:bg-saurena-gold/20'
+              }`}
+            >
+              Eco Kraft
             </button>
           </div>
 
@@ -92,7 +129,7 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
             >
               Back Artwork
             </button>
-            {selectedType === 'pouch' && (
+            {selectedType !== 'box' && (
               <button
                 onClick={() => setActiveSide('gussets')}
                 className={`px-3 py-1.5 rounded-full font-semibold transition-colors ${
@@ -109,13 +146,13 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
 
         {/* Content Viewer with High-Res Images */}
         <div className="p-6 overflow-y-auto flex-1 flex flex-col md:flex-row gap-6 items-center justify-center bg-[#FAF6F0]">
-          {selectedType === 'pouch' ? (
+          {selectedType === 'pouch' && (
             <>
               {activeSide === 'front' && (
                 <div className="max-w-sm rounded-2xl overflow-hidden shadow-xl border border-saurena-gold/30 bg-white">
                   <img
                     src="/assets/pouch_front.png"
-                    alt="SAURÉNA Stand-Up Pouch Front"
+                    alt="SAURÉNA Stand-Up Foil Pouch Front"
                     className="w-full h-auto object-contain max-h-[58vh]"
                   />
                 </div>
@@ -124,7 +161,7 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
                 <div className="max-w-sm rounded-2xl overflow-hidden shadow-xl border border-saurena-gold/30 bg-white">
                   <img
                     src="/assets/pouch_back.png"
-                    alt="SAURÉNA Stand-Up Pouch Back"
+                    alt="SAURÉNA Stand-Up Foil Pouch Back"
                     className="w-full h-auto object-contain max-h-[58vh]"
                   />
                 </div>
@@ -148,7 +185,9 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
                 </div>
               )}
             </>
-          ) : (
+          )}
+
+          {selectedType === 'box' && (
             <>
               {activeSide === 'front' && (
                 <div className="max-w-sm rounded-2xl overflow-hidden shadow-xl border border-saurena-gold/30 bg-white">
@@ -171,12 +210,46 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
             </>
           )}
 
+          {selectedType === 'kraft' && (
+            <>
+              {activeSide === 'front' && (
+                <div className="max-w-sm rounded-2xl overflow-hidden shadow-xl border border-saurena-gold/30 bg-white">
+                  <img
+                    src="/assets/kraft_pouch_front.png"
+                    alt="SAURÉNA Eco Kraft Stand-Up Pouch Front"
+                    className="w-full h-auto object-contain max-h-[58vh]"
+                  />
+                </div>
+              )}
+              {activeSide === 'back' && (
+                <div className="max-w-sm rounded-2xl overflow-hidden shadow-xl border border-saurena-gold/30 bg-white">
+                  <img
+                    src="/assets/kraft_pouch_back.png"
+                    alt="SAURÉNA Eco Kraft Stand-Up Pouch Back"
+                    className="w-full h-auto object-contain max-h-[58vh]"
+                  />
+                </div>
+              )}
+              {activeSide === 'gussets' && (
+                <div className="flex gap-6 items-center justify-center">
+                  <div className="rounded-2xl overflow-hidden shadow-xl border border-saurena-gold/30 bg-white max-w-[140px]">
+                    <img
+                      src="/assets/kraft_gusset.png"
+                      alt="Eco Kraft Gusset"
+                      className="w-full h-auto object-contain max-h-[58vh]"
+                    />
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
           {/* Quick Packaging Spec Callout Panel */}
           <div className="w-full md:w-80 flex flex-col gap-3 text-xs">
             <div className="p-4 rounded-2xl bg-white/80 border border-saurena-gold/25 shadow-sm">
               <span className="font-bold text-saurena-forest block mb-1">Authentic Packaging Preservation</span>
               <p className="text-saurena-forest/80 leading-relaxed text-[11px]">
-                Preserves original supplied packaging artwork, graphics, barcode (8 904567 890123), and verified Gujarati regional labeling.
+                Preserves original supplied packaging artwork, graphics, barcode, and verified Gujarati regional labeling.
               </p>
             </div>
 
@@ -190,7 +263,7 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
             <div className="p-4 rounded-2xl bg-white/80 border border-saurena-gold/25 shadow-sm">
               <span className="font-bold text-saurena-forest block mb-1">Packaging Net Weight</span>
               <p className="text-saurena-forest/80 leading-relaxed text-[11px]">
-                Certified 100 g per unit • Airtight hermetic sealing barrier.
+                Certified 100 g per unit • Resealable airtight zipper barrier.
               </p>
             </div>
           </div>
@@ -199,4 +272,3 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
     </div>
   );
 };
-

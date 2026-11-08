@@ -22,7 +22,7 @@ export const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
   const [packagingModalOpen, setPackagingModalOpen] = useState(false);
-  const [packagingModalType, setPackagingModalType] = useState<'pouch' | 'box'>('pouch');
+  const [packagingModalType, setPackagingModalType] = useState<'pouch' | 'box' | 'kraft'>('pouch');
 
   // Initialize Lenis smooth scroll
   useEffect(() => {
@@ -47,7 +47,7 @@ export const App: React.FC = () => {
     };
   }, []);
 
-  const handleOpenPackagingModal = (type: 'pouch' | 'box') => {
+  const handleOpenPackagingModal = (type: 'pouch' | 'box' | 'kraft') => {
     setPackagingModalType(type);
     setPackagingModalOpen(true);
   };

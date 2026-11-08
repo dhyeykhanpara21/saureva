@@ -5,15 +5,17 @@ import { ShieldCheck, Package, Sparkles, Scale, Info, ArrowUpRight, CheckCircle2
 
 interface ProductShowcaseProps {
   onOpenInquiry: () => void;
-  onOpenPackagingModal: (type: 'pouch' | 'box') => void;
+  onOpenPackagingModal: (type: 'pouch' | 'box' | 'kraft') => void;
 }
 
 export const ProductShowcase: React.FC<ProductShowcaseProps> = ({
   onOpenInquiry,
   onOpenPackagingModal
 }) => {
-  const [selectedFormat, setSelectedFormat] = useState<'pouch' | 'box'>('pouch');
+  const [selectedFormat, setSelectedFormat] = useState<'pouch' | 'box' | 'kraft'>('pouch');
   const [activeTab, setActiveTab] = useState<'overview' | 'nutrition' | 'usage'>('overview');
+
+  const activePackaging = productDetails.packagingTypes.find((p) => p.id === selectedFormat) || productDetails.packagingTypes[0];
 
   return (
     <section id="product" className="relative py-28 md:py-36 bg-saurena-ivory overflow-hidden">
@@ -38,26 +40,26 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({
           </h2>
 
           <p className="mt-6 text-base sm:text-lg text-saurena-forest/80 max-w-xl mx-auto leading-relaxed">
-            SAURÉNA Kathiyawadi Masala is available in two distinct packaging formats: our everyday resealable stand-up pouch and our handcrafted artisan gift box.
+            SAURÉNA Kathiyawadi Masala is presented in three distinctive authentic formats: our everyday resealable stand-up foil pouch, our handcrafted rigid cardboard gift box, and our natural unbleached eco kraft pouch.
           </p>
 
           {/* Format Switcher Pills */}
-          <div className="mt-8 inline-flex p-1.5 rounded-full bg-white/70 backdrop-blur-md border border-saurena-gold/30 shadow-md">
+          <div className="mt-8 inline-flex flex-wrap justify-center p-1.5 rounded-full bg-white/70 backdrop-blur-md border border-saurena-gold/30 shadow-md gap-1">
             <button
               onClick={() => setSelectedFormat('pouch')}
-              className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
                 selectedFormat === 'pouch'
                   ? 'bg-saurena-forest text-saurena-ivory shadow-lg'
                   : 'text-saurena-forest/80 hover:text-saurena-forest'
               }`}
             >
               <Package className="w-3.5 h-3.5" />
-              <span>Stand-Up Pouch (100g)</span>
+              <span>Stand-Up Foil Pouch</span>
             </button>
 
             <button
               onClick={() => setSelectedFormat('box')}
-              className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
                 selectedFormat === 'box'
                   ? 'bg-saurena-forest text-saurena-ivory shadow-lg'
                   : 'text-saurena-forest/80 hover:text-saurena-forest'
@@ -65,6 +67,18 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>Artisan Cardboard Box</span>
+            </button>
+
+            <button
+              onClick={() => setSelectedFormat('kraft')}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
+                selectedFormat === 'kraft'
+                  ? 'bg-saurena-forest text-saurena-ivory shadow-lg'
+                  : 'text-saurena-forest/80 hover:text-saurena-forest'
+              }`}
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Eco Kraft Pouch</span>
             </button>
           </div>
         </div>
@@ -82,7 +96,7 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({
               {/* Product Badge & Weight */}
               <div className="flex items-center justify-between pb-4 border-b border-saurena-gold/20">
                 <span className="px-3 py-1 rounded-full bg-saurena-gold/20 text-saurena-forest text-xs font-bold uppercase tracking-widest">
-                  {selectedFormat === 'pouch' ? 'Resealable Foil Barrier' : 'Artisan Kraft Carton'}
+                  {activePackaging.badge}
                 </span>
                 <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-saurena-gold">
                   <Scale className="w-3.5 h-3.5" />
@@ -137,6 +151,9 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({
               {/* Tab 1: Overview */}
               {activeTab === 'overview' && (
                 <div className="space-y-4 text-xs text-saurena-forest/85 leading-relaxed">
+                  <div className="p-3.5 rounded-2xl bg-saurena-gold/10 border border-saurena-gold/25 font-medium text-saurena-forest">
+                    {activePackaging.description}
+                  </div>
                   <p>{productDetails.description}</p>
                   <div className="space-y-2 pt-2">
                     <div className="flex items-center gap-2">

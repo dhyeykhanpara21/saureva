@@ -48,7 +48,7 @@ export interface ProductDetails {
   barcode: string;
   nutrition: NutritionFact[];
   packagingTypes: {
-    id: 'pouch' | 'box';
+    id: 'pouch' | 'box' | 'kraft';
     name: string;
     description: string;
     badge: string;

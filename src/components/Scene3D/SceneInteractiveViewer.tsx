@@ -4,9 +4,10 @@ import { OrbitControls, ContactShadows, Environment, Float } from '@react-three/
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { PouchModel } from './PouchModel';
 import { BoxModel } from './BoxModel';
+import { KraftPouchModel } from './KraftPouchModel';
 
 interface SceneInteractiveViewerProps {
-  packagingType: 'pouch' | 'box';
+  packagingType: 'pouch' | 'box' | 'kraft';
   autoRotate?: boolean;
 }
 
@@ -45,11 +46,9 @@ export const SceneInteractiveViewer: React.FC<SceneInteractiveViewerProps> = ({
         <Suspense fallback={null}>
           <Float speed={1.0} rotationIntensity={0.05} floatIntensity={0.06} floatingRange={[-0.03, 0.03]}>
             <group position={[0, -0.2, 0]}>
-              {packagingType === 'pouch' ? (
-                <PouchModel scale={0.9} openFactor={0} />
-              ) : (
-                <BoxModel scale={0.9} />
-              )}
+              {packagingType === 'pouch' && <PouchModel scale={0.9} openFactor={0} />}
+              {packagingType === 'box' && <BoxModel scale={0.9} />}
+              {packagingType === 'kraft' && <KraftPouchModel scale={0.9} />}
             </group>
           </Float>
 
