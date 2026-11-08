@@ -69,7 +69,7 @@ export const verifiedIngredients: Ingredient[] = [
     aroma: 'Pungent, smoky, fiery warmth',
     role: 'Provides the iconic deep sunset color and hearty heat essential to Saurashtra curries.',
     region: 'Gondal & Saurashtra Plains',
-    image: '/assets/images/red_chilli.jpg'
+    image: '/assets/images/spice_red_chilli.jpg'
   },
   {
     id: 'coriander',
@@ -80,7 +80,7 @@ export const verifiedIngredients: Ingredient[] = [
     aroma: 'Citrus, floral, gently woody',
     role: 'Forms the cooling, aromatic backbone that softens sharpness and thickens gravies.',
     region: 'Gujarat Regional Mandis',
-    image: '/assets/images/coriander_cumin.jpg'
+    image: '/assets/images/spice_coriander.jpg'
   },
   {
     id: 'cumin',
@@ -91,7 +91,7 @@ export const verifiedIngredients: Ingredient[] = [
     aroma: 'Earthy, nutty, warming',
     role: 'Essential to the "vaghar" (tadka), releasing intense nutty fragrance upon heating.',
     region: 'Unjha Spice Belt',
-    image: '/assets/images/coriander_cumin.jpg'
+    image: '/assets/images/spice_cumin.jpg'
   },
   {
     id: 'turmeric',
@@ -102,7 +102,7 @@ export const verifiedIngredients: Ingredient[] = [
     aroma: 'Earthy, peppery, warm ginger note',
     role: 'Lends the golden luster and time-honored digestive wellness revered in Gujarati homes.',
     region: 'Western Deccan & Gujarat',
-    image: '/assets/images/turmeric_golden.jpg'
+    image: '/assets/images/spice_turmeric.jpg'
   },
   {
     id: 'black-pepper',
@@ -113,7 +113,7 @@ export const verifiedIngredients: Ingredient[] = [
     aroma: 'Sharp, piney, sharp peppery bite',
     role: 'Delivers a lingering, dry heat that activates other spices across the palate.',
     region: 'Malabar & Western Ghats',
-    image: '/assets/images/cloves_cinnamon.jpg'
+    image: '/assets/images/spice_black_pepper.jpg'
   },
   {
     id: 'clove',
@@ -124,7 +124,7 @@ export const verifiedIngredients: Ingredient[] = [
     aroma: 'Intensely sweet, medicinal, spicy',
     role: 'Adds unmistakable sweet depth and high-note aroma to robust Kathiyawadi curries.',
     region: 'Coastal spice plantations',
-    image: '/assets/images/cloves_cinnamon.jpg'
+    image: '/assets/images/spice_clove.jpg'
   },
   {
     id: 'cinnamon',
@@ -135,7 +135,7 @@ export const verifiedIngredients: Ingredient[] = [
     aroma: 'Warm, sweet, woody and rich',
     role: 'Harmonizes pungent chillies with sweet, soothing undertones.',
     region: 'Western hills',
-    image: '/assets/images/cloves_cinnamon.jpg'
+    image: '/assets/images/spice_cinnamon.jpg'
   },
   {
     id: 'bay-leaf',
@@ -146,7 +146,7 @@ export const verifiedIngredients: Ingredient[] = [
     aroma: 'Herbal, tea-like, subtle camphor',
     role: 'Infuses slow-cooked preparations with layered aromatic complexity.',
     region: 'Sub-Himalayan foothills',
-    image: '/assets/images/spice_bowl_mortar.jpg'
+    image: '/assets/images/spice_bay_leaf.jpg'
   },
   {
     id: 'nutmeg-mace',
@@ -157,7 +157,7 @@ export const verifiedIngredients: Ingredient[] = [
     aroma: 'Lacy, sweet, exotic royal bouquet',
     role: 'The signature touch that transforms rustic village spices into a royal Kathiyawadi feast.',
     region: 'Southern Spice Estates',
-    image: '/assets/images/spice_bowl_mortar.jpg'
+    image: '/assets/images/spice_nutmeg_mace.jpg'
   }
 ];
 
