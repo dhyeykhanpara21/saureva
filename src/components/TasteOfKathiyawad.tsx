@@ -1,20 +1,93 @@
 import React, { useState } from 'react';
-import { kathiyawadiDishes } from '../data/saurenaData';
-import { Dish } from '../types';
-import { Utensils, Flame, ChevronRight, Sparkles } from 'lucide-react';
+import { DishOrbitCarousel, Dish as CarouselDish } from '@/components/ui/dish-orbit-carousel';
+import { Sparkles, X, CheckCircle2 } from 'lucide-react';
+
+const carouselDishes: CarouselDish[] = [
+  {
+    title: 'Rustic Millet',
+    subtitle: 'Bajra no Rotlo',
+    eyebrow: '#1 Saurashtra Classic',
+    label: 'Bajra Rotlo',
+    image: '/assets/images/dish_rotlo.jpg',
+    rating: 4.9,
+    chef: 'Kathiyawadi Kitchen',
+    kitchen: 'Charred on traditional clay griddle',
+    description:
+      'Hand-patted pearl millet flatbread slow-roasted over open babool wood flames. Served with freshly churned white butter, fiery garlic chutney, and organic jaggery.',
+    likes: 1842,
+    ingredients: ['Pearl Millet', 'SAURÉNA Masala', 'White Makhan', 'Garlic Chutney', 'Organic Jaggery'],
+    accent: '#BD8A26'
+  },
+  {
+    title: 'Fire-Roasted',
+    subtitle: 'Ringan no Oro',
+    eyebrow: '#2 Smoky Delicacy',
+    label: 'Ringan Oro',
+    image: '/assets/images/dish_eggplant.jpg',
+    rating: 4.9,
+    chef: 'Kathiyawadi Kitchen',
+    kitchen: 'Smoked over glowing babool coals',
+    description:
+      'Smoky fire-roasted jumbo eggplants mashed and simmered in golden groundnut oil with generous heaps of spring garlic, green chillies, and aromatic spices.',
+    likes: 1620,
+    ingredients: ['Smoked Eggplant', 'SAURÉNA Masala', 'Spring Garlic', 'Groundnut Oil', 'Green Chillies'],
+    accent: '#713A24'
+  },
+  {
+    title: 'Highway Dhaba',
+    subtitle: 'Sev Tameta',
+    eyebrow: '#3 Sweet & Tangy',
+    label: 'Sev Tameta',
+    image: '/assets/images/dish_curry.jpg',
+    rating: 4.8,
+    chef: 'Kathiyawadi Kitchen',
+    kitchen: 'Tempered in pure groundnut oil',
+    description:
+      'Juicy ripe tomatoes tempered with mustard seeds and curry leaves in a tangy, aromatic gravy, finished right before serving with a generous handful of spicy crunchy sev.',
+    likes: 1435,
+    ingredients: ['Country Tomatoes', 'Ratlami Sev', 'SAURÉNA Masala', 'Mustard Seeds', 'Fresh Coriander'],
+    accent: '#C25E2E'
+  },
+  {
+    title: 'Royal Banquet',
+    subtitle: 'Kathiyawadi Thali',
+    eyebrow: '#4 Grand Feast',
+    label: 'Royal Thali',
+    image: '/assets/images/dish_thali.jpg',
+    rating: 5.0,
+    chef: 'Kathiyawadi Kitchen',
+    kitchen: 'A regal spread of Saurashtra hospitality',
+    description:
+      'The quintessential feast: steaming Bajra Rotlo, Ringan Oro, Lasaniya Bataka, Sev Tameta, fresh chaas (buttermilk), and pure cow ghee. United by the magic of SAURÉNA.',
+    likes: 2190,
+    ingredients: ['Bajra Rotlo', 'Ringan Oro', 'Sev Tameta', 'Lasan Chutney', 'Fresh Chaas', 'SAURÉNA Masala'],
+    accent: '#153B27'
+  }
+];
 
 export const TasteOfKathiyawad: React.FC = () => {
-  const [activeDish, setActiveDish] = useState<Dish>(kathiyawadiDishes[0]);
+  const [selectedRecipe, setSelectedRecipe] = useState<CarouselDish | null>(null);
+
+  const handleOrder = () => {
+    const productSection = document.getElementById('product');
+    if (productSection) {
+      productSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handlePlay = (dish: CarouselDish) => {
+    setSelectedRecipe(dish);
+  };
 
   return (
-    <section id="taste" className="relative py-16 sm:py-28 md:py-36 bg-[#F5EFE4] overflow-hidden">
+    <section id="taste" className="relative bg-[#F5EFE4] overflow-hidden">
       {/* Background grain and subtle decorative elements */}
       <div className="absolute inset-0 bg-grain pointer-events-none" />
-      <div className="absolute top-1/3 right-10 w-96 h-96 bg-saurena-gold/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 right-10 w-96 h-96 bg-saurena-gold/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-12 relative z-10">
-        {/* Section Header */}
-        <div className="max-w-3xl mb-10 sm:mb-16 md:mb-20">
+      {/* Section Header */}
+      <div className="pt-20 sm:pt-28 md:pt-36 pb-6 max-w-7xl mx-auto px-5 sm:px-6 md:px-12 relative z-10">
+        <div className="max-w-3xl">
           <div className="flex items-center gap-3 mb-3 sm:mb-4">
             <span className="w-6 sm:w-8 h-[1.5px] bg-saurena-gold" />
             <span className="text-xs uppercase tracking-[0.25em] font-semibold text-saurena-gold">
@@ -32,96 +105,122 @@ export const TasteOfKathiyawad: React.FC = () => {
             discover how SAURÉNA elevates authentic Kathiyawadi comfort dishes.
           </p>
         </div>
+      </div>
 
-        {/* Dish Spotlight Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch mb-10 sm:mb-16">
-          {/* Main Visual Display */}
-          <div className="lg:col-span-7 relative group">
-            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-saurena-gold/30 aspect-[4/3] md:aspect-[16/10] bg-saurena-darkgreen">
-              <img
-                src={activeDish.image}
-                alt={activeDish.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-saurena-darkgreen/90 via-saurena-darkgreen/30 to-transparent" />
+      {/* Dish Orbit Carousel Stage */}
+      <div className="relative z-10 border-y border-saurena-gold/20 shadow-inner">
+        <DishOrbitCarousel
+          dishes={carouselDishes}
+          loop={true}
+          height="100svh"
+          onOrder={handleOrder}
+          onPlay={handlePlay}
+        />
+      </div>
 
-              {/* Tag Badge */}
-              <div className="absolute top-4 sm:top-6 left-4 sm:left-6 flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full glass-panel border border-saurena-gold/40 text-[10px] sm:text-xs font-semibold text-saurena-forest tracking-wider uppercase">
-                <Utensils className="w-3 sm:w-3.5 sm:h-3.5 text-saurena-gold" />
-                <span>Authentic Saurashtra Table</span>
-              </div>
-
-              {/* Inset Dish Details */}
-              <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 text-white">
-                <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-saurena-gold mb-1">
-                  <Flame className="w-3.5 h-3.5" />
-                  <span>{activeDish.spiceLevel}</span>
-                </div>
-                <h3 className="font-editorial text-2xl sm:text-3xl md:text-4xl font-bold">
-                  {activeDish.name}
-                </h3>
-                <span className="font-editorial text-lg sm:text-xl text-saurena-gold/90 italic block mb-1 sm:mb-2">
-                  {activeDish.gujarati}
-                </span>
-                <p className="text-xs sm:text-sm text-saurena-cream/90 max-w-xl line-clamp-2 sm:line-clamp-none">
-                  {activeDish.description}
-                </p>
-              </div>
+      {/* Culinary Secret Tip Bar */}
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-12 py-10 sm:py-14 relative z-10">
+        <div className="glass-panel p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-saurena-gold/30 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="flex items-start gap-4">
+            <div className="p-3 rounded-xl bg-saurena-gold/15 text-saurena-gold shrink-0 mt-1">
+              <Sparkles className="w-5 h-5" />
             </div>
-          </div>
-
-          {/* Right Column: Quick Selector & Culinary Pairing Note */}
-          <div className="lg:col-span-5 flex flex-col justify-between gap-4 sm:gap-6">
-            {/* Quick Dish Selection Buttons */}
-            <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
-              {kathiyawadiDishes.map((dish) => {
-                const isSelected = activeDish.id === dish.id;
-                return (
-                  <button
-                    key={dish.id}
-                    onClick={() => setActiveDish(dish)}
-                    className={`p-3 sm:p-3.5 rounded-xl sm:rounded-2xl text-left border transition-all duration-300 flex flex-col justify-between ${
-                      isSelected
-                        ? 'bg-saurena-forest text-white border-saurena-gold shadow-md scale-[1.02]'
-                        : 'glass-panel text-saurena-forest border-saurena-gold/20 hover:border-saurena-gold/50'
-                    }`}
-                  >
-                    <span className="font-editorial text-xs sm:text-sm font-bold truncate">
-                      {dish.name}
-                    </span>
-                    <span
-                      className={`text-[10px] sm:text-[11px] font-gujarati mt-0.5 sm:mt-1 ${
-                        isSelected ? 'text-saurena-gold font-medium' : 'text-saurena-brown/70'
-                      }`}
-                    >
-                      {dish.gujarati}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="glass-panel p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-saurena-gold/30 shadow-xl">
-              <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono font-bold tracking-widest uppercase text-saurena-gold mb-2 sm:mb-3">
-                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-saurena-gold" />
-                <span>Culinary Secret</span>
+            <div>
+              <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono font-bold tracking-widest uppercase text-saurena-gold mb-1">
+                Authentic Kathiyawadi Kitchen Secret
               </div>
-              <h4 className="font-editorial text-xl sm:text-2xl text-saurena-forest font-bold mb-2 sm:mb-3">
-                How SAURÉNA Complements {activeDish.name}
+              <h4 className="font-editorial text-lg sm:text-xl text-saurena-forest font-bold mb-1">
+                Blooming the Masala in Hot Groundnut Oil
               </h4>
-              <p className="text-xs sm:text-sm text-saurena-forest/80 leading-relaxed mb-4 sm:mb-6">
-                {activeDish.pairingNote}
+              <p className="text-xs sm:text-sm text-saurena-forest/80 leading-relaxed max-w-2xl">
+                For authentic Saurashtra aroma, bloom 1 teaspoon of SAURÉNA Kathiyawadi Masala in warm groundnut oil or A2 cow ghee for 10 seconds before stirring in crushed garlic or country tomatoes.
               </p>
-
-              <div className="p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-saurena-ivory/90 border border-saurena-gold/25 text-xs text-saurena-brown">
-                <span className="font-bold block mb-1">Authentic Kathiyawadi Tip:</span>
-                Bloom 1 teaspoon of SAURÉNA Masala in warm groundnut oil or A2 cow ghee for 10 seconds before stirring in garlic or tomatoes to fully open the roasted coriander and clove aromatics.
-              </div>
             </div>
           </div>
+
+          <button
+            onClick={handleOrder}
+            className="px-6 py-3 rounded-full bg-saurena-forest hover:bg-saurena-darkgreen text-white text-xs uppercase tracking-widest font-semibold transition-all duration-300 hover:scale-105 shadow-md shrink-0 border border-saurena-gold/40 flex items-center gap-2"
+          >
+            <span>Explore SAURÉNA Masala</span>
+          </button>
         </div>
       </div>
+
+      {/* Recipe Modal Preview */}
+      {selectedRecipe && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
+          onClick={() => setSelectedRecipe(null)}
+        >
+          <div
+            className="bg-[#FFFDF8] rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-saurena-gold/40 shadow-2xl relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedRecipe(null)}
+              className="absolute top-5 right-5 p-2 rounded-full hover:bg-black/5 text-saurena-forest/60 hover:text-saurena-forest transition-colors"
+              aria-label="Close dialog"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-2 text-[11px] font-mono tracking-widest uppercase text-saurena-gold mb-2">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>{selectedRecipe.eyebrow}</span>
+            </div>
+
+            <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-saurena-forest mb-1">
+              {selectedRecipe.subtitle}
+            </h3>
+            <p className="text-xs text-saurena-brown font-medium mb-4">
+              {selectedRecipe.kitchen}
+            </p>
+
+            <div className="rounded-2xl overflow-hidden mb-5 border border-saurena-gold/25 aspect-video relative">
+              <img
+                src={selectedRecipe.image}
+                alt={selectedRecipe.subtitle}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
+                <span className="text-white text-xs font-medium">
+                  {selectedRecipe.description}
+                </span>
+              </div>
+            </div>
+
+            <div className="mb-5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-saurena-forest mb-2">
+                Key Ingredients & Aromas:
+              </h4>
+              <div className="flex flex-wrap gap-1.5">
+                {selectedRecipe.ingredients?.map((ing) => (
+                  <span
+                    key={ing}
+                    className="px-2.5 py-1 rounded-full text-xs bg-saurena-gold/15 text-saurena-forest font-medium flex items-center gap-1"
+                  >
+                    <CheckCircle2 className="w-3 h-3 text-saurena-gold" />
+                    {ing}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <button
+              onClick={() => {
+                setSelectedRecipe(null);
+                handleOrder();
+              }}
+              className="w-full py-3 rounded-full bg-saurena-gold hover:bg-saurena-gold/90 text-saurena-forest font-bold text-xs uppercase tracking-widest shadow-md transition-all duration-300"
+            >
+              Get SAURÉNA Masala for this Dish
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
-

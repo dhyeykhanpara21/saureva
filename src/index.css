@@ -10,6 +10,12 @@
     --saurena-brown: #713A24;
     --saurena-darkgreen: #10291C;
     --saurena-cream: #FFFDF8;
+
+    /* Semantic color tokens for shadcn and UI components */
+    --color-background: #F5EFE4;
+    --color-foreground: #153B27;
+    --color-primary: #BD8A26;
+    --color-muted-foreground: #713A24;
   }
 
   html {
