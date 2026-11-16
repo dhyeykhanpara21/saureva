@@ -179,10 +179,11 @@ const CSS =
   ".dsh-tab[aria-selected=true]{color:var(--color-foreground);font-weight:600}" +
   ".dsh-bodies{display:grid}" +
   ".dsh-body{grid-area:1/1;visibility:hidden}" +
-  ".dsh-rate{position:relative;height:62px;margin:0 0 14px 6px}" +
-  ".dsh-badge{position:absolute;left:0;top:0;width:46px;height:62px;border-radius:10px}" +
-  ".dsh-badge svg{position:absolute;left:17px;bottom:9px;width:12px;height:12px;fill:var(--color-foreground);opacity:.8}" +
-  ".dsh-num{position:absolute;left:10px;top:4px;font-size:36px;font-weight:700;letter-spacing:-.04em;line-height:1}" +
+  ".dsh-rate{position:relative;margin:0 0 14px 2px}" +
+  ".dsh-badge{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:56px;height:60px;border-radius:12px;" +
+  "box-shadow:0 6px 14px -3px rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.28);transition:background .4s ease}" +
+  ".dsh-badge .dsh-num{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1;color:#FFFDF8;text-shadow:0 1px 2px rgba(0,0,0,.25);margin-bottom:2px}" +
+  ".dsh-badge svg{width:12px;height:12px;fill:#FFFDF8;opacity:.95;filter:drop-shadow(0 1px 1px rgba(0,0,0,.2))}" +
   ".dsh-chef{font-size:19px;font-weight:600;letter-spacing:-.01em;margin:0}" +
   ".dsh-kit{font-size:10.5px;color:var(--color-muted-foreground);margin:3px 0 12px}" +
   ".dsh-desc{font-size:12.5px;line-height:1.38;margin:0;min-height:52px}" +
@@ -538,9 +539,9 @@ export function DishOrbitCarousel({
               <div key={i} ref={(el) => { bodies.current[i] = el }} className="dsh-body" aria-hidden={i !== index}>
                 <div className="dsh-rate">
                   <div className="dsh-badge" style={{ background: d.accent }}>
+                    <span className="dsh-num" aria-label={"Rated " + d.rating.toFixed(1) + " out of 5"}>{d.rating.toFixed(1)}</span>
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6.8-4.9 4.6 1.3 6.6L12 17.2l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" /></svg>
                   </div>
-                  <span className="dsh-num" aria-label={"Rated " + d.rating.toFixed(1) + " out of 5"}>{d.rating.toFixed(1)}</span>
                 </div>
                 <p className="dsh-chef">{d.chef}</p>
                 <p className="dsh-kit">{d.kitchen ?? " "}</p>

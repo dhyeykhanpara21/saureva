@@ -102,20 +102,20 @@ export const StoryScroll3D: React.FC<StoryScroll3DProps> = ({
             targetScale = isDesktop ? 1.08 : 0.52;
             targetBurst = 0.25;
           } else if (p < 0.85) {
-            // Stage 3: Returning to front stage
+            // Stage 3: Returning to front stage (pouch comfortably on right, card on left)
             const sub = (p - 0.68) / 0.17;
             targetRotY = Math.PI + sub * Math.PI;
-            targetPosX = isDesktop ? 1.15 * (1 - sub) : 0;
-            targetPosY = isDesktop ? -0.28 : 0.62;
+            targetPosX = isDesktop ? 1.25 : 0;
+            targetPosY = isDesktop ? -0.25 : 0.62;
             targetScale = isDesktop ? 1.05 : 0.52;
             targetBurst = 0.35;
           } else {
-            // Stage 4: Spice burst eruption stage
+            // Stage 4: Spice burst eruption stage (pouch centered at upper-mid, card at bottom)
             const sub = (p - 0.85) / 0.15;
             targetRotY = Math.PI * 2 + sub * 0.25;
             targetRotX = sub * 0.08;
-            targetPosX = 0;
-            targetPosY = isDesktop ? -0.32 : 0.48;
+            targetPosX = isDesktop ? 1.25 * Math.max(0, 1 - sub * 2.5) : 0;
+            targetPosY = isDesktop ? -0.18 : 0.45;
             targetScale = isDesktop ? 1.12 : 0.55;
             targetBurst = Math.min(1.0, 0.4 + sub * 0.6);
             targetOpen = sub;
@@ -298,11 +298,11 @@ export const StoryScroll3D: React.FC<StoryScroll3DProps> = ({
 
           {/* STEP 3: RETURN TO FRONT & HARVEST (Visible when activeStep === 3) */}
           <div
-            className={`transition-all duration-700 mx-auto text-center ${
+            className={`transition-all duration-700 mr-0 lg:mr-auto ${
               activeStep === 3
-                ? 'opacity-100 translate-y-0 pointer-events-auto'
-                : 'opacity-0 translate-y-8 pointer-events-none absolute'
-            } flex flex-col items-center justify-end lg:justify-center pb-4 sm:pb-8 lg:pb-0 h-full lg:h-[70vh] max-w-lg w-full`}
+                ? 'opacity-100 translate-x-0 pointer-events-auto'
+                : 'opacity-0 -translate-x-12 pointer-events-none absolute'
+            } flex flex-col justify-end lg:justify-center pb-4 sm:pb-8 lg:pb-0 h-full lg:h-[70vh] max-w-md w-full`}
           >
             <div className="glass-panel p-5 sm:p-8 rounded-2xl sm:rounded-3xl shadow-xl border border-saurena-gold/30">
               <span className="text-[10px] sm:text-[11px] font-mono tracking-widest text-saurena-gold font-bold uppercase">
@@ -327,17 +327,17 @@ export const StoryScroll3D: React.FC<StoryScroll3DProps> = ({
               activeStep === 4
                 ? 'opacity-100 scale-100 pointer-events-auto'
                 : 'opacity-0 scale-95 pointer-events-none absolute'
-            } flex flex-col items-center justify-end lg:justify-center pb-4 sm:pb-8 lg:pb-0 h-full lg:h-[70vh] max-w-xl w-full`}
+            } flex flex-col items-center justify-end pb-6 sm:pb-10 h-full max-w-xl w-full`}
           >
-            <div className="glass-panel p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl shadow-2xl border border-saurena-gold/40">
+            <div className="glass-panel p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl shadow-2xl border border-saurena-gold/40">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-saurena-gold/20 text-saurena-forest text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-2 sm:mb-3">
                 <Sparkles className="w-3.5 h-3.5 text-saurena-gold" />
                 Aroma Unleashed
               </div>
-              <h2 className="font-editorial text-2xl sm:text-4xl md:text-5xl text-saurena-forest font-bold mb-2 sm:mb-3">
+              <h2 className="font-editorial text-2xl sm:text-3xl md:text-4xl text-saurena-forest font-bold mb-2">
                 The Feast of Kathiyawad.
               </h2>
-              <p className="text-xs sm:text-sm md:text-base text-saurena-forest/85 leading-relaxed mb-4 sm:mb-6">
+              <p className="text-xs sm:text-sm text-saurena-forest/85 leading-relaxed mb-4">
                 Golden turmeric embers, Gondal crimson chillies, toasted cumin, and royal cloves converge in a symphony of fragrance.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-4">

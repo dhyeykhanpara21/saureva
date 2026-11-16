@@ -16,6 +16,28 @@
     --color-foreground: #153B27;
     --color-primary: #BD8A26;
     --color-muted-foreground: #713A24;
+
+    /* shadcn HSL tokens for components */
+    --background: 39 44% 93%;
+    --foreground: 148 47% 16%;
+    --card: 43 100% 99%;
+    --card-foreground: 148 47% 16%;
+    --popover: 43 100% 99%;
+    --popover-foreground: 148 47% 16%;
+    --primary: 148 47% 16%;
+    --primary-foreground: 43 100% 99%;
+    --secondary: 40 66% 45%;
+    --secondary-foreground: 43 100% 99%;
+    --muted: 38 35% 88%;
+    --muted-foreground: 17 52% 29%;
+    --accent: 40 66% 45%;
+    --accent-foreground: 43 100% 99%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 43 100% 99%;
+    --border: 40 30% 82%;
+    --input: 40 30% 82%;
+    --ring: 40 66% 45%;
+    --radius: 0.75rem;
   }
 
   html {
