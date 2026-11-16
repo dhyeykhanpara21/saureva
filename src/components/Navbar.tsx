@@ -86,14 +86,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
     setMobileMenuOpen(false);
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const lenis = (window as unknown as { lenis?: { scrollTo: (target: Element, options?: object) => void } }).lenis;
+      if (lenis) {
+        lenis.scrollTo(element, { offset: 0, duration: 1.2 });
+      } else {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
           isScrolled
             ? 'glass-panel shadow-sm py-3 border-b border-saurena-gold/20'
             : 'bg-transparent py-4 sm:py-5'
@@ -186,7 +191,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
 
       {/* Mobile Drawer Menu */}
       <div
-        className={`fixed inset-0 z-30 lg:hidden bg-saurena-ivory/98 backdrop-blur-xl transition-all duration-500 flex flex-col justify-between p-6 sm:p-8 pt-24 sm:pt-28 overflow-y-auto ${
+        className={`fixed inset-0 z-40 lg:hidden bg-[#F5EFE4] transition-all duration-300 flex flex-col justify-between p-6 sm:p-8 pt-24 sm:pt-28 overflow-y-auto ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >

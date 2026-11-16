@@ -54,6 +54,11 @@ export type DishOrbitCarouselProps = {
   onOrder?: (dish: Dish, index: number) => void
   onChange?: (index: number) => void
   className?: string
+  /**
+   * When true, page scroll scrub-drives the carousel via a pinned scroll-track.
+   * When false (default), the carousel is an embedded interactive stage with zero blank scroll track.
+   */
+  scrollDriven?: boolean
 }
 
 // #region carousel
@@ -233,7 +238,7 @@ const Icon = {
 
 export function DishOrbitCarousel({
   dishes,
-  height = "100svh",
+  height = "560px",
   backdrop,
   loop = true,
   fontSrc = FONT_DATA,
@@ -241,6 +246,7 @@ export function DishOrbitCarousel({
   onOrder,
   onChange,
   className,
+  scrollDriven = false,
 }: DishOrbitCarouselProps) {
   const n = dishes.length
   const [index, setIndex] = useState(0)
@@ -363,9 +369,10 @@ export function DishOrbitCarousel({
     onChangeRef.current?.(next)
   }
 
-  // The page scroll drives the dish: the stage pins, one stretch of scroll per dish, snapping between them.
+  // The page scroll drives the dish when scrollDriven=true
   const steps = scrollSteps(n, loop)
   useEffect(() => {
+    if (!scrollDriven) return
     const track = trackRef.current
     if (!track || steps < 1) return
     const trigger = ScrollTrigger.create({
@@ -409,7 +416,7 @@ export function DishOrbitCarousel({
       trigger.kill()
       stRef.current = null
     }
-  }, [steps, loop, n])
+  }, [steps, loop, n, scrollDriven])
 
   // Buttons, keys and swipes jump to a dish and move the scroll to its stretch, so the two stay in step.
   const go = (to: number, dir?: 1 | -1) => {
@@ -444,11 +451,23 @@ export function DishOrbitCarousel({
   const dish = dishes[index]
 
   return (
-    <div ref={trackRef} className={"dsh-trk" + (className ? " " + className : "")} style={{ height: "calc(" + height + " * " + (1 + steps * SCROLL_PER_DISH) + ")" }}>
     <div
-      ref={rootRef}
-      className="dsh-root"
-      style={{ height }}
+      ref={trackRef}
+      className={"dsh-trk" + (className ? " " + className : "")}
+      style={{
+        height: scrollDriven
+          ? "calc(" + height + " * " + (1 + steps * SCROLL_PER_DISH) + ")"
+          : height,
+      }}
+    >
+      <div
+        ref={rootRef}
+        className="dsh-root"
+        style={{
+          height,
+          position: scrollDriven ? "sticky" : "relative",
+          top: scrollDriven ? 0 : undefined,
+        }}
       role="region"
       aria-roledescription="carousel"
       aria-label="Dishes"

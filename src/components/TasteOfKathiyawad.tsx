@@ -71,7 +71,12 @@ export const TasteOfKathiyawad: React.FC = () => {
   const handleOrder = () => {
     const productSection = document.getElementById('product');
     if (productSection) {
-      productSection.scrollIntoView({ behavior: 'smooth' });
+      const lenis = (window as unknown as { lenis?: { scrollTo: (target: Element, options?: object) => void } }).lenis;
+      if (lenis) {
+        lenis.scrollTo(productSection, { offset: 0, duration: 1.2 });
+      } else {
+        productSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -80,7 +85,7 @@ export const TasteOfKathiyawad: React.FC = () => {
   };
 
   return (
-    <section id="taste" className="relative bg-[#F5EFE4] overflow-hidden">
+    <section id="taste" className="relative bg-[#F5EFE4]">
       {/* Background grain and subtle decorative elements */}
       <div className="absolute inset-0 bg-grain pointer-events-none" />
       <div className="absolute top-1/4 right-10 w-96 h-96 bg-saurena-gold/10 rounded-full blur-3xl pointer-events-none" />
@@ -112,7 +117,8 @@ export const TasteOfKathiyawad: React.FC = () => {
         <DishOrbitCarousel
           dishes={carouselDishes}
           loop={true}
-          height="100svh"
+          height="560px"
+          scrollDriven={false}
           onOrder={handleOrder}
           onPlay={handlePlay}
         />

@@ -32,6 +32,8 @@ export const App: React.FC = () => {
       smoothWheel: true,
     });
 
+    (window as unknown as { lenis?: Lenis }).lenis = lenis;
+
     lenis.on('scroll', ScrollTrigger.update);
 
     const updateLenis = (time: number) => {
@@ -42,6 +44,7 @@ export const App: React.FC = () => {
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      delete (window as unknown as { lenis?: Lenis }).lenis;
       gsap.ticker.remove(updateLenis);
       lenis.destroy();
     };
@@ -55,7 +58,12 @@ export const App: React.FC = () => {
   const scrollToProduct = () => {
     const el = document.getElementById('product');
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      const lenis = (window as unknown as { lenis?: Lenis }).lenis;
+      if (lenis) {
+        lenis.scrollTo(el, { offset: 0, duration: 1.2 });
+      } else {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
