@@ -27,16 +27,16 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInquiry }) => {
   ];
 
   return (
-    <footer id="footer" className="relative bg-[#0D2217] text-saurena-ivory pt-20 pb-12 border-t border-saurena-gold/20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-saurena-gold/20">
+    <footer id="footer" className="relative bg-[#0D2217] text-saurena-ivory pt-12 sm:pt-20 pb-8 sm:pb-12 border-t border-saurena-gold/20 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-12 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-12 pb-10 sm:pb-16 border-b border-saurena-gold/20">
           {/* Col 1: Brand Info & Official Logo (4 cols) */}
           <div className="lg:col-span-4">
-            <div className="inline-block p-3.5 bg-saurena-ivory rounded-2xl shadow-lg border border-saurena-gold/30 mb-6">
+            <div className="inline-block p-2.5 sm:p-3.5 bg-saurena-ivory rounded-xl sm:rounded-2xl shadow-lg border border-saurena-gold/30 mb-4 sm:mb-6">
               <img
                 src="/assets/saurena_logo_cropped.png"
                 alt="SAURÉNA — The Taste of Saurashtra"
-                className="w-44 sm:w-48 h-auto object-contain"
+                className="w-36 sm:w-48 h-auto object-contain"
               />
             </div>
             <p className="text-xs text-saurena-ivory/70 leading-relaxed mb-6 max-w-sm">

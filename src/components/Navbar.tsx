@@ -75,9 +75,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
   const navLinks = [
     { name: 'Home', href: '#hero' },
     { name: 'Our Story', href: '#heritage' },
-    { name: 'What’s Inside', href: '#ingredients' },
+    { name: 'Our Ingredients', href: '#ingredients' },
     { name: 'Our Product', href: '#product' },
-    { name: 'Taste of Kathiyawad', href: '#taste' },
+    { name: 'Kathiyawad', href: '#taste' },
     { name: 'Our Approach', href: '#approach' },
     { name: 'Contact', href: '#footer' },
   ];
@@ -95,11 +95,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
       <header
         className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 ${
           isScrolled
-            ? 'glass-panel shadow-sm py-3.5 border-b border-saurena-gold/20'
-            : 'bg-transparent py-5'
+            ? 'glass-panel shadow-sm py-3 border-b border-saurena-gold/20'
+            : 'bg-transparent py-4 sm:py-5'
         }`}
       >
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex items-center justify-between">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 xl:px-12 flex items-center justify-between">
           {/* SAURÉNA Official Logo with generous breathing room */}
           <a
             href="#hero"
@@ -107,17 +107,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
               e.preventDefault();
               handleNavClick('#hero');
             }}
-            className="flex items-center gap-3 group focus:outline-none shrink-0 mr-8 md:mr-12 lg:mr-16 xl:mr-24"
+            className="flex items-center gap-3 group focus:outline-none shrink-0 mr-6 sm:mr-8 md:mr-12 lg:mr-10 xl:mr-16 2xl:mr-24"
           >
             <img
               src="/assets/saurena_logo_transparent.png"
               alt="SAURÉNA — The Taste of Saurashtra"
-              className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              className="h-8 sm:h-9 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </a>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-[12px] xl:text-[13px] tracking-widest uppercase font-medium text-saurena-forest/90">
+          {/* Desktop Navigation Links with guaranteed whitespace protection */}
+          <nav className="hidden lg:flex items-center gap-3.5 xl:gap-6 2xl:gap-8 text-[11px] xl:text-[12px] 2xl:text-[13px] tracking-wider xl:tracking-widest uppercase font-medium text-saurena-forest/90 shrink-0">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -126,7 +126,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
                   e.preventDefault();
                   handleNavClick(link.href);
                 }}
-                className="relative py-1 hover:text-saurena-gold transition-colors duration-200 group"
+                className="relative py-1 whitespace-nowrap shrink-0 hover:text-saurena-gold transition-colors duration-200 group"
               >
                 {link.name}
                 <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-saurena-gold transition-all duration-300 group-hover:w-full" />
@@ -135,12 +135,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
           </nav>
 
           {/* Header Action Buttons */}
-          <div className="hidden sm:flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-3 xl:gap-4 shrink-0">
             {/* Ambient Sound Toggle */}
             <button
               onClick={toggleAmbientAudio}
               title={isPlayingAudio ? 'Mute ambient soundscape' : 'Play ambient Saurashtra soundscape'}
-              className="p-2.5 rounded-full border border-saurena-gold/30 hover:border-saurena-gold text-saurena-forest hover:text-saurena-gold transition-colors duration-200 bg-white/40 backdrop-blur-sm"
+              className="p-2 sm:p-2.5 rounded-full border border-saurena-gold/30 hover:border-saurena-gold text-saurena-forest hover:text-saurena-gold transition-colors duration-200 bg-white/40 backdrop-blur-sm shrink-0"
               aria-label="Toggle ambient sound"
             >
               {isPlayingAudio ? (
@@ -153,7 +153,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
             {/* Enquire Now CTA */}
             <button
               onClick={onOpenInquiry}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-saurena-forest text-saurena-ivory text-xs font-semibold tracking-wider uppercase hover:bg-saurena-gold transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+              className="flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full bg-saurena-forest text-saurena-ivory text-xs font-semibold tracking-wider uppercase hover:bg-saurena-gold transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 whitespace-nowrap shrink-0"
             >
               <span>Enquire Now</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -186,11 +186,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
 
       {/* Mobile Drawer Menu */}
       <div
-        className={`fixed inset-0 z-30 lg:hidden bg-saurena-ivory/95 backdrop-blur-xl transition-all duration-500 flex flex-col justify-between p-8 pt-28 ${
+        className={`fixed inset-0 z-30 lg:hidden bg-saurena-ivory/98 backdrop-blur-xl transition-all duration-500 flex flex-col justify-between p-6 sm:p-8 pt-24 sm:pt-28 overflow-y-auto ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
-        <nav className="flex flex-col gap-6 text-center">
+        <nav className="flex flex-col gap-5 sm:gap-6 text-center my-auto">
           {navLinks.map((link) => (
             <a
               key={link.name}
@@ -199,24 +199,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
                 e.preventDefault();
                 handleNavClick(link.href);
               }}
-              className="font-editorial text-2xl text-saurena-forest hover:text-saurena-gold transition-colors tracking-wide"
+              className="font-editorial text-xl sm:text-2xl text-saurena-forest hover:text-saurena-gold transition-colors tracking-wide py-1"
             >
               {link.name}
             </a>
           ))}
         </nav>
 
-        <div className="flex flex-col gap-4 items-center">
+        <div className="flex flex-col gap-3 sm:gap-4 items-center pt-6 pb-2">
           <button
             onClick={() => {
               setMobileMenuOpen(false);
               onOpenInquiry();
             }}
-            className="w-full max-w-xs py-3.5 rounded-full bg-saurena-forest text-saurena-ivory text-xs font-semibold tracking-widest uppercase hover:bg-saurena-gold transition-colors text-center"
+            className="w-full max-w-xs py-3.5 rounded-full bg-saurena-forest text-saurena-ivory text-xs font-semibold tracking-widest uppercase hover:bg-saurena-gold transition-colors text-center shadow-lg"
           >
             Enquire Now
           </button>
-          <p className="text-[11px] text-saurena-brown/70 tracking-widest uppercase">
+          <p className="text-[10px] sm:text-[11px] text-saurena-brown/70 tracking-widest uppercase">
             SAURÉNA — The Taste of Saurashtra
           </p>
         </div>

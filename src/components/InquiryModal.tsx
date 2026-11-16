@@ -29,12 +29,12 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({ isOpen, onClose }) =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-xl bg-saurena-ivory rounded-3xl border border-saurena-gold/40 shadow-2xl overflow-hidden p-6 sm:p-10">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-xl max-h-[92vh] overflow-y-auto bg-saurena-ivory rounded-2xl sm:rounded-3xl border border-saurena-gold/40 shadow-2xl p-5 sm:p-8 md:p-10">
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full text-saurena-forest hover:bg-saurena-gold/20 transition-colors"
+          className="absolute top-4 right-4 sm:top-5 sm:right-5 p-2 rounded-full text-saurena-forest hover:bg-saurena-gold/20 transition-colors"
           aria-label="Close modal"
         >
           <X className="w-5 h-5" />

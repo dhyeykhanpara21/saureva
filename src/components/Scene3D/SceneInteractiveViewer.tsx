@@ -29,7 +29,7 @@ export const SceneInteractiveViewer: React.FC<SceneInteractiveViewerProps> = ({
   return (
     <div
       data-lenis-prevent
-      className="relative w-full h-[520px] md:h-[620px] rounded-3xl overflow-hidden bg-gradient-to-b from-[#FAF6EF] to-[#ECE3D4] border border-saurena-gold/25 shadow-2xl"
+      className="relative w-full h-[380px] sm:h-[480px] md:h-[620px] rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-b from-[#FAF6EF] to-[#ECE3D4] border border-saurena-gold/25 shadow-2xl"
     >
       <Canvas
         camera={{ position: [0, 0, 7.6], fov: 42 }}
@@ -76,36 +76,36 @@ export const SceneInteractiveViewer: React.FC<SceneInteractiveViewerProps> = ({
       </Canvas>
 
       {/* Interactive preset angle controls overlay */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-saurena-gold/30 shadow-lg text-xs font-semibold text-saurena-forest tracking-wider uppercase z-10">
+      <div className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full glass-panel border border-saurena-gold/30 shadow-lg text-[10px] sm:text-xs font-semibold text-saurena-forest tracking-wider uppercase z-10 max-w-[95vw] overflow-x-auto scrollbar-none">
         <span className="text-saurena-gold/80 text-[10px] hidden sm:inline mr-1">View:</span>
         <button
           onClick={() => resetCamera(0, Math.PI / 2)}
-          className="px-2.5 py-1 rounded-full hover:bg-saurena-forest hover:text-white transition-colors"
+          className="px-2 sm:px-2.5 py-1 rounded-full hover:bg-saurena-forest hover:text-white transition-colors shrink-0"
         >
           Front
         </button>
         <button
           onClick={() => resetCamera(Math.PI, Math.PI / 2)}
-          className="px-2.5 py-1 rounded-full hover:bg-saurena-forest hover:text-white transition-colors"
+          className="px-2 sm:px-2.5 py-1 rounded-full hover:bg-saurena-forest hover:text-white transition-colors shrink-0"
         >
           Back
         </button>
         <button
           onClick={() => resetCamera(Math.PI * 0.5, Math.PI / 2)}
-          className="px-2.5 py-1 rounded-full hover:bg-saurena-forest hover:text-white transition-colors"
+          className="px-2 sm:px-2.5 py-1 rounded-full hover:bg-saurena-forest hover:text-white transition-colors shrink-0"
         >
           Side
         </button>
         <button
           onClick={() => resetCamera(0, Math.PI / 3.4)}
-          className="px-2.5 py-1 rounded-full hover:bg-saurena-forest hover:text-white transition-colors"
+          className="px-2 sm:px-2.5 py-1 rounded-full hover:bg-saurena-forest hover:text-white transition-colors shrink-0"
         >
           Top
         </button>
         <button
           onClick={() => setSpinning(!spinning)}
-          className={`px-2.5 py-1 rounded-full transition-colors ${
-            spinning ? 'bg-saurena-gold text-saurena-forest' : 'hover:bg-saurena-forest hover:text-white'
+          className={`px-2 sm:px-2.5 py-1 rounded-full transition-colors shrink-0 ${
+            spinning ? 'bg-saurena-gold text-saurena-forest font-bold' : 'hover:bg-saurena-forest hover:text-white'
           }`}
         >
           {spinning ? 'Pause' : '360°'}
@@ -113,8 +113,8 @@ export const SceneInteractiveViewer: React.FC<SceneInteractiveViewerProps> = ({
       </div>
 
       {/* Drag instruction pill */}
-      <div className="absolute top-5 left-5 pointer-events-none flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-saurena-gold/20 text-[11px] font-medium text-saurena-brown">
-        <span className="inline-block w-2 h-2 rounded-full bg-saurena-gold animate-ping" />
+      <div className="absolute top-3 left-3 sm:top-5 sm:left-5 pointer-events-none flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-saurena-gold/20 text-[10px] sm:text-[11px] font-medium text-saurena-brown">
+        <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-saurena-gold animate-ping" />
         Drag 360° to inspect authentic packaging
       </div>
     </div>

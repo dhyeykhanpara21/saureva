@@ -37,25 +37,25 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-4xl max-h-[90vh] bg-saurena-ivory rounded-3xl border border-saurena-gold/40 shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/70 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-4xl max-h-[92vh] sm:max-h-[90vh] bg-saurena-ivory rounded-2xl sm:rounded-3xl border border-saurena-gold/40 shadow-2xl overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="p-6 border-b border-saurena-gold/25 flex items-center justify-between bg-white/40">
+        <div className="p-4 sm:p-6 border-b border-saurena-gold/25 flex items-center justify-between bg-white/40">
           <div>
             <div className="flex items-center gap-2">
               <span className="w-4 h-[1.5px] bg-saurena-gold" />
-              <span className="text-[11px] font-mono tracking-widest text-saurena-gold uppercase font-bold">
+              <span className="text-[10px] sm:text-[11px] font-mono tracking-widest text-saurena-gold uppercase font-bold">
                 Authentic Packaging Inspection
               </span>
             </div>
-            <h3 className="font-editorial text-2xl font-bold text-saurena-forest">
+            <h3 className="font-editorial text-lg sm:text-2xl font-bold text-saurena-forest">
               {getTitle()}
             </h3>
           </div>
 
           <button
             onClick={onClose}
-            className="p-2 rounded-full text-saurena-forest hover:bg-saurena-gold/20 transition-colors"
+            className="p-1.5 sm:p-2 rounded-full text-saurena-forest hover:bg-saurena-gold/20 transition-colors"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -63,15 +63,15 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
         </div>
 
         {/* Format & Side Switcher */}
-        <div className="px-6 py-3 bg-saurena-ivory border-b border-saurena-gold/20 flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2">
-            <span className="text-saurena-brown/80 font-bold uppercase tracking-wider text-[11px]">Format:</span>
+        <div className="px-4 sm:px-6 py-2.5 sm:py-3 bg-saurena-ivory border-b border-saurena-gold/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 text-xs overflow-x-auto scrollbar-none">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <span className="text-saurena-brown/80 font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">Format:</span>
             <button
               onClick={() => {
                 setSelectedType('pouch');
                 if (activeSide === 'gussets') setActiveSide('front');
               }}
-              className={`px-3 py-1.5 rounded-full font-semibold transition-colors ${
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold transition-colors ${
                 selectedType === 'pouch'
                   ? 'bg-saurena-forest text-white'
                   : 'bg-white/60 text-saurena-forest hover:bg-saurena-gold/20'
@@ -84,7 +84,7 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
                 setSelectedType('box');
                 if (activeSide === 'gussets') setActiveSide('front');
               }}
-              className={`px-3 py-1.5 rounded-full font-semibold transition-colors ${
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold transition-colors ${
                 selectedType === 'box'
                   ? 'bg-saurena-forest text-white'
                   : 'bg-white/60 text-saurena-forest hover:bg-saurena-gold/20'
@@ -97,7 +97,7 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
                 setSelectedType('kraft');
                 if (activeSide === 'gussets') setActiveSide('front');
               }}
-              className={`px-3 py-1.5 rounded-full font-semibold transition-colors ${
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold transition-colors ${
                 selectedType === 'kraft'
                   ? 'bg-saurena-forest text-white'
                   : 'bg-white/60 text-saurena-forest hover:bg-saurena-gold/20'
@@ -107,11 +107,11 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
             </button>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-saurena-brown/80 font-bold uppercase tracking-wider text-[11px]">View:</span>
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <span className="text-saurena-brown/80 font-bold uppercase tracking-wider text-[10px] sm:text-[11px]">View:</span>
             <button
               onClick={() => setActiveSide('front')}
-              className={`px-3 py-1.5 rounded-full font-semibold transition-colors ${
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold transition-colors ${
                 activeSide === 'front'
                   ? 'bg-saurena-gold text-saurena-forest'
                   : 'bg-white/60 text-saurena-forest hover:bg-saurena-gold/20'
@@ -121,7 +121,7 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
             </button>
             <button
               onClick={() => setActiveSide('back')}
-              className={`px-3 py-1.5 rounded-full font-semibold transition-colors ${
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold transition-colors ${
                 activeSide === 'back'
                   ? 'bg-saurena-gold text-saurena-forest'
                   : 'bg-white/60 text-saurena-forest hover:bg-saurena-gold/20'
@@ -132,7 +132,7 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
             {selectedType !== 'box' && (
               <button
                 onClick={() => setActiveSide('gussets')}
-                className={`px-3 py-1.5 rounded-full font-semibold transition-colors ${
+                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-semibold transition-colors ${
                   activeSide === 'gussets'
                     ? 'bg-saurena-gold text-saurena-forest'
                     : 'bg-white/60 text-saurena-forest hover:bg-saurena-gold/20'
@@ -145,7 +145,7 @@ export const PackagingModal: React.FC<PackagingModalProps> = ({
         </div>
 
         {/* Content Viewer with High-Res Images */}
-        <div className="p-6 overflow-y-auto flex-1 flex flex-col md:flex-row gap-6 items-center justify-center bg-[#FAF6F0]">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1 flex flex-col md:flex-row gap-4 sm:gap-6 items-center justify-center bg-[#FAF6F0]">
           {selectedType === 'pouch' && (
             <>
               {activeSide === 'front' && (

@@ -18,14 +18,14 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({
   const activePackaging = productDetails.packagingTypes.find((p) => p.id === selectedFormat) || productDetails.packagingTypes[0];
 
   return (
-    <section id="product" className="relative py-28 md:py-36 bg-saurena-ivory overflow-hidden">
+    <section id="product" className="relative py-16 sm:py-28 md:py-36 bg-saurena-ivory overflow-hidden">
       {/* Background grain and light radial glow */}
       <div className="absolute inset-0 bg-grain pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-saurena-gold/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-12 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 md:mb-20">
           <div className="inline-flex items-center gap-2 mb-3">
             <span className="w-6 h-[1.5px] bg-saurena-gold" />
             <span className="text-xs uppercase tracking-[0.25em] font-semibold text-saurena-gold">
@@ -34,57 +34,57 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({
             <span className="w-6 h-[1.5px] bg-saurena-gold" />
           </div>
 
-          <h2 className="font-editorial text-4xl sm:text-5xl md:text-6xl text-saurena-forest font-bold tracking-tight">
+          <h2 className="font-editorial text-3xl sm:text-5xl md:text-6xl text-saurena-forest font-bold tracking-tight">
             MEET YOUR NEW <br />
             <span className="italic font-normal text-saurena-brown">KITCHEN ESSENTIAL.</span>
           </h2>
 
-          <p className="mt-6 text-base sm:text-lg text-saurena-forest/80 max-w-xl mx-auto leading-relaxed">
+          <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-saurena-forest/80 max-w-xl mx-auto leading-relaxed">
             SAURÉNA Kathiyawadi Masala is presented in three distinctive authentic formats: our everyday resealable stand-up foil pouch, our handcrafted rigid cardboard gift box, and our natural unbleached eco kraft pouch.
           </p>
 
           {/* Format Switcher Pills */}
-          <div className="mt-8 inline-flex flex-wrap justify-center p-1.5 rounded-full bg-white/70 backdrop-blur-md border border-saurena-gold/30 shadow-md gap-1">
+          <div className="mt-6 sm:mt-8 flex flex-col sm:inline-flex sm:flex-row justify-center p-1.5 rounded-2xl sm:rounded-full bg-white/70 backdrop-blur-md border border-saurena-gold/30 shadow-md gap-1 max-w-md sm:max-w-none mx-auto w-full sm:w-auto">
             <button
               onClick={() => setSelectedFormat('pouch')}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
+              className={`flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
                 selectedFormat === 'pouch'
                   ? 'bg-saurena-forest text-saurena-ivory shadow-lg'
-                  : 'text-saurena-forest/80 hover:text-saurena-forest'
+                  : 'text-saurena-forest/80 hover:text-saurena-forest hover:bg-black/5'
               }`}
             >
-              <Package className="w-3.5 h-3.5" />
+              <Package className="w-3.5 h-3.5 shrink-0" />
               <span>Stand-Up Foil Pouch</span>
             </button>
 
             <button
               onClick={() => setSelectedFormat('box')}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
+              className={`flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
                 selectedFormat === 'box'
                   ? 'bg-saurena-forest text-saurena-ivory shadow-lg'
-                  : 'text-saurena-forest/80 hover:text-saurena-forest'
+                  : 'text-saurena-forest/80 hover:text-saurena-forest hover:bg-black/5'
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5" />
+              <Sparkles className="w-3.5 h-3.5 shrink-0" />
               <span>Artisan Cardboard Box</span>
             </button>
 
             <button
               onClick={() => setSelectedFormat('kraft')}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
+              className={`flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 ${
                 selectedFormat === 'kraft'
                   ? 'bg-saurena-forest text-saurena-ivory shadow-lg'
-                  : 'text-saurena-forest/80 hover:text-saurena-forest'
+                  : 'text-saurena-forest/80 hover:text-saurena-forest hover:bg-black/5'
               }`}
             >
-              <ShieldCheck className="w-3.5 h-3.5" />
+              <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
               <span>Eco Kraft Pouch</span>
             </button>
           </div>
         </div>
 
         {/* Main Showcase Layout: 3D Canvas on Left/Center, Specs on Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           {/* 3D Interactive Model Viewer */}
           <div className="lg:col-span-7">
             <SceneInteractiveViewer packagingType={selectedFormat} />
@@ -92,10 +92,10 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({
 
           {/* Product Details & Action Panel */}
           <div className="lg:col-span-5 flex flex-col justify-between">
-            <div className="glass-panel p-8 sm:p-10 rounded-3xl border border-saurena-gold/30 shadow-xl">
+            <div className="glass-panel p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl border border-saurena-gold/30 shadow-xl">
               {/* Product Badge & Weight */}
               <div className="flex items-center justify-between pb-4 border-b border-saurena-gold/20">
-                <span className="px-3 py-1 rounded-full bg-saurena-gold/20 text-saurena-forest text-xs font-bold uppercase tracking-widest">
+                <span className="px-3 py-1 rounded-full bg-saurena-gold/20 text-saurena-forest text-[11px] sm:text-xs font-bold uppercase tracking-widest">
                   {activePackaging.badge}
                 </span>
                 <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-saurena-gold">
@@ -105,43 +105,43 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({
               </div>
 
               {/* Title & Gujarati Typography */}
-              <div className="mt-6">
-                <h3 className="font-editorial text-3xl sm:text-4xl text-saurena-forest font-bold">
+              <div className="mt-5 sm:mt-6">
+                <h3 className="font-editorial text-2xl sm:text-3xl md:text-4xl text-saurena-forest font-bold">
                   {productDetails.title}
                 </h3>
-                <span className="font-editorial text-2xl text-saurena-gold block mt-1">
+                <span className="font-editorial text-xl sm:text-2xl text-saurena-gold block mt-1">
                   {productDetails.gujaratiTitle}
                 </span>
               </div>
 
               {/* Navigation Tabs (Overview / Nutrition / Usage) */}
-              <div className="flex border-b border-saurena-gold/25 mt-6 mb-6">
+              <div className="flex border-b border-saurena-gold/25 mt-5 sm:mt-6 mb-5 sm:mb-6">
                 <button
                   onClick={() => setActiveTab('overview')}
-                  className={`pb-2.5 px-3 text-xs font-bold tracking-wider uppercase transition-colors relative ${
+                  className={`pb-3 px-3 sm:px-4 text-xs font-bold tracking-wider uppercase transition-colors relative ${
                     activeTab === 'overview'
-                      ? 'text-saurena-forest border-b-2 border-saurena-gold'
-                      : 'text-saurena-forest/60 hover:text-saurena-forest'
+                      ? 'text-saurena-forest border-b-2 border-saurena-forest -mb-[1.5px]'
+                      : 'text-saurena-forest/50 hover:text-saurena-forest'
                   }`}
                 >
                   Overview
                 </button>
                 <button
                   onClick={() => setActiveTab('nutrition')}
-                  className={`pb-2.5 px-3 text-xs font-bold tracking-wider uppercase transition-colors relative ${
+                  className={`pb-3 px-3 sm:px-4 text-xs font-bold tracking-wider uppercase transition-colors relative ${
                     activeTab === 'nutrition'
-                      ? 'text-saurena-forest border-b-2 border-saurena-gold'
-                      : 'text-saurena-forest/60 hover:text-saurena-forest'
+                      ? 'text-saurena-forest border-b-2 border-saurena-forest -mb-[1.5px]'
+                      : 'text-saurena-forest/50 hover:text-saurena-forest'
                   }`}
                 >
                   Nutrition (100g)
                 </button>
                 <button
                   onClick={() => setActiveTab('usage')}
-                  className={`pb-2.5 px-3 text-xs font-bold tracking-wider uppercase transition-colors relative ${
+                  className={`pb-3 px-3 sm:px-4 text-xs font-bold tracking-wider uppercase transition-colors relative ${
                     activeTab === 'usage'
-                      ? 'text-saurena-forest border-b-2 border-saurena-gold'
-                      : 'text-saurena-forest/60 hover:text-saurena-forest'
+                      ? 'text-saurena-forest border-b-2 border-saurena-forest -mb-[1.5px]'
+                      : 'text-saurena-forest/50 hover:text-saurena-forest'
                   }`}
                 >
                   How to Use
@@ -207,10 +207,10 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({
               )}
 
               {/* CTAs */}
-              <div className="mt-8 pt-6 border-t border-saurena-gold/25 flex flex-wrap items-center gap-3">
+              <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-saurena-gold/25 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <button
                   onClick={onOpenInquiry}
-                  className="flex-1 min-w-[140px] py-3.5 px-6 rounded-full bg-saurena-forest text-saurena-ivory text-xs font-semibold tracking-wider uppercase hover:bg-saurena-gold transition-all duration-300 shadow-lg text-center flex items-center justify-center gap-2"
+                  className="w-full sm:flex-1 py-3.5 px-6 rounded-full bg-saurena-forest text-saurena-ivory text-xs font-semibold tracking-wider uppercase hover:bg-saurena-gold transition-all duration-300 shadow-lg text-center flex items-center justify-center gap-2"
                 >
                   <span>Enquire Now</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -218,7 +218,7 @@ export const ProductShowcase: React.FC<ProductShowcaseProps> = ({
 
                 <button
                   onClick={() => onOpenPackagingModal(selectedFormat)}
-                  className="py-3.5 px-5 rounded-full border border-saurena-gold/40 text-saurena-forest text-xs font-semibold tracking-wider uppercase hover:bg-saurena-gold/15 transition-colors flex items-center gap-2"
+                  className="w-full sm:w-auto py-3.5 px-5 rounded-full border border-saurena-gold/40 text-saurena-forest text-xs font-semibold tracking-wider uppercase hover:bg-saurena-gold/15 transition-colors flex items-center justify-center gap-2"
                 >
                   <Info className="w-3.5 h-3.5 text-saurena-gold" />
                   <span>View Packaging</span>
