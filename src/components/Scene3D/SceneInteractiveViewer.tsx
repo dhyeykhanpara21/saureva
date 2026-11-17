@@ -36,12 +36,12 @@ export const SceneInteractiveViewer: React.FC<SceneInteractiveViewerProps> = ({
         gl={{ antialias: true, alpha: true }}
         dpr={[1, 2]}
       >
-        <ambientLight intensity={1.3} color="#FFFBF4" />
-        <directionalLight position={[4, 6, 5]} intensity={1.9} color="#FFF1D6" castShadow />
-        <directionalLight position={[-4, 3, -4]} intensity={1.2} color="#BD8A26" />
-        <directionalLight position={[0, -3, 3]} intensity={0.5} color="#ECE3D4" />
+        <ambientLight intensity={0.85} color="#FFFBF5" />
+        <directionalLight position={[3, 5, 4]} intensity={1.15} color="#FFF6E8" castShadow />
+        <directionalLight position={[-3, 3, -3]} intensity={0.65} color="#BD8A26" />
+        <directionalLight position={[0, -3, 2]} intensity={0.25} color="#ECE3D4" />
 
-        <Environment preset="studio" environmentIntensity={0.4} />
+        <Environment preset="studio" environmentIntensity={0.25} />
 
         <Suspense fallback={null}>
           <Float speed={1.0} rotationIntensity={0.05} floatIntensity={0.06} floatingRange={[-0.03, 0.03]}>

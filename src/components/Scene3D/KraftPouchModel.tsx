@@ -25,8 +25,8 @@ export const KraftPouchModel: React.FC<KraftPouchModelProps> = ({ scale = 1 }) =
     });
   }, [frontTex, backTex, gussetTex]);
 
-  const { frontGeom, backGeom, leftGeom, rightGeom, topCapGeom } = useMemo(() => {
-    return createStandupPouchGeometries(2.38, 3.86, 0.72);
+  const { frontGeom, backGeom, leftGeom, rightGeom, bottomGeom, topCapGeom } = useMemo(() => {
+    return createStandupPouchGeometries(2.36, 3.86, 0.64);
   }, []);
 
   // Material setup for natural artisan kraft paper texture (matte, tactile)
@@ -34,8 +34,8 @@ export const KraftPouchModel: React.FC<KraftPouchModelProps> = ({ scale = 1 }) =
     () =>
       new THREE.MeshStandardMaterial({
         map: frontTex,
-        roughness: 0.76,
-        metalness: 0.02
+        roughness: 0.78,
+        metalness: 0.01
       }),
     [frontTex]
   );
@@ -44,8 +44,8 @@ export const KraftPouchModel: React.FC<KraftPouchModelProps> = ({ scale = 1 }) =
     () =>
       new THREE.MeshStandardMaterial({
         map: backTex,
-        roughness: 0.76,
-        metalness: 0.02
+        roughness: 0.78,
+        metalness: 0.01
       }),
     [backTex]
   );
@@ -54,18 +54,28 @@ export const KraftPouchModel: React.FC<KraftPouchModelProps> = ({ scale = 1 }) =
     () =>
       new THREE.MeshStandardMaterial({
         map: gussetTex,
-        roughness: 0.78,
-        metalness: 0.02
+        roughness: 0.80,
+        metalness: 0.01
       }),
     [gussetTex]
+  );
+
+  const bottomMaterial = useMemo(
+    () =>
+      new THREE.MeshStandardMaterial({
+        color: '#A67746',
+        roughness: 0.85,
+        metalness: 0.01
+      }),
+    []
   );
 
   const sealCapMaterial = useMemo(
     () =>
       new THREE.MeshStandardMaterial({
-        color: '#9E7448',
-        roughness: 0.8,
-        metalness: 0.05
+        color: '#A67746',
+        roughness: 0.82,
+        metalness: 0.02
       }),
     []
   );
@@ -84,9 +94,11 @@ export const KraftPouchModel: React.FC<KraftPouchModelProps> = ({ scale = 1 }) =
       {/* Right Gusset */}
       <mesh geometry={rightGeom} material={gussetMaterial} castShadow receiveShadow />
 
+      {/* Sealed Bottom Base */}
+      <mesh geometry={bottomGeom} material={bottomMaterial} receiveShadow />
+
       {/* Top Kraft Crimp Seal */}
       <mesh geometry={topCapGeom} material={sealCapMaterial} castShadow />
     </group>
   );
 };
-

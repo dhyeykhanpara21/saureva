@@ -7,55 +7,70 @@ interface BoxModelProps {
 }
 
 export const BoxModel: React.FC<BoxModelProps> = ({ scale = 1 }) => {
-  const [frontTex, backTex, sideTex, topTex] = useTexture([
+  // Load 6 authentic face textures extracted from high-res package mockups
+  const [frontTex, backTex, leftTex, rightTex, topTex, bottomTex] = useTexture([
     '/assets/box_front.png',
     '/assets/box_back.png',
-    '/assets/box_side.png',
-    '/assets/box_top.png'
+    '/assets/box_left.png',
+    '/assets/box_right.png',
+    '/assets/box_top.png',
+    '/assets/box_bottom.png'
   ]);
 
   useMemo(() => {
-    [frontTex, backTex, sideTex, topTex].forEach((tex) => {
+    [frontTex, backTex, leftTex, rightTex, topTex, bottomTex].forEach((tex) => {
       tex.wrapS = THREE.ClampToEdgeWrapping;
       tex.wrapT = THREE.ClampToEdgeWrapping;
       tex.colorSpace = THREE.SRGBColorSpace;
       tex.anisotropy = 8;
       tex.needsUpdate = true;
     });
-  }, [frontTex, backTex, sideTex, topTex]);
+  }, [frontTex, backTex, leftTex, rightTex, topTex, bottomTex]);
 
   const materials = useMemo(() => {
-    const kraftSideMat = new THREE.MeshStandardMaterial({
-      map: sideTex,
-      roughness: 0.75,
+    // Face 0: +X (Right Side: Try With: Sev Tameta, Ringan Oro, Kathiyawadi Sabzi, Rotla & Chaas)
+    const rightMat = new THREE.MeshStandardMaterial({
+      map: rightTex,
+      roughness: 0.76,
       metalness: 0.02
     });
 
-    const kraftTopMat = new THREE.MeshStandardMaterial({
+    // Face 1: -X (Left Side: 4 Quality Claims)
+    const leftMat = new THREE.MeshStandardMaterial({
+      map: leftTex,
+      roughness: 0.76,
+      metalness: 0.02
+    });
+
+    // Face 2: +Y (Top View: Kraft with maroon seal sticker)
+    const topMat = new THREE.MeshStandardMaterial({
       map: topTex,
-      roughness: 0.75,
+      roughness: 0.74,
       metalness: 0.02
     });
 
-    const kraftBottomMat = new THREE.MeshStandardMaterial({
-      color: '#B88E63',
-      roughness: 0.85,
-      metalness: 0.0
+    // Face 3: -Y (Bottom View: Folded kraft flaps)
+    const bottomMat = new THREE.MeshStandardMaterial({
+      map: bottomTex,
+      roughness: 0.82,
+      metalness: 0.01
     });
 
+    // Face 4: +Z (Front View)
     const frontMat = new THREE.MeshStandardMaterial({
       map: frontTex,
-      roughness: 0.7,
+      roughness: 0.72,
       metalness: 0.02
     });
 
+    // Face 5: -Z (Back View)
     const backMat = new THREE.MeshStandardMaterial({
       map: backTex,
-      roughness: 0.7,
+      roughness: 0.72,
       metalness: 0.02
     });
 
-    // Box face material array order in Three.js:
+    // Three.js BoxGeometry face material array order:
     // [0]: +X (right)
     // [1]: -X (left)
     // [2]: +Y (top)
@@ -63,19 +78,19 @@ export const BoxModel: React.FC<BoxModelProps> = ({ scale = 1 }) => {
     // [4]: +Z (front)
     // [5]: -Z (back)
     return [
-      kraftSideMat,
-      kraftSideMat,
-      kraftTopMat,
-      kraftBottomMat,
+      rightMat,
+      leftMat,
+      topMat,
+      bottomMat,
       frontMat,
       backMat
     ];
-  }, [frontTex, backTex, sideTex, topTex]);
+  }, [frontTex, backTex, leftTex, rightTex, topTex, bottomTex]);
 
   return (
     <group scale={scale} dispose={null}>
       <mesh material={materials} castShadow receiveShadow>
-        <boxGeometry args={[2.45, 3.86, 1.15, 4, 4, 4]} />
+        <boxGeometry args={[2.34, 3.86, 0.94, 2, 2, 2]} />
       </mesh>
     </group>
   );

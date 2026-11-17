@@ -2,45 +2,51 @@ import * as THREE from 'three';
 
 /**
  * Creates accurate geometries for a realistic 3D Stand-Up Pouch:
- * - Front curved face with belly bulge and crimp top
- * - Back curved face with reverse bulge and crimp top
- * - Left and right gusset panels
- * - Top crimped foil seal
- * - Bottom stand-up gusset base
+ * - Front face with natural belly curvature and crimped top
+ * - Back face with matching volume
+ * - Realistic side gusset depth (NOT razor thin) with authentic V-tuck crease
+ * - Sealed bottom base
+ * - Sealed top crimp cap
  */
 export function createStandupPouchGeometries(
-  width = 2.38,
+  width = 2.34,
   height = 3.86,
-  depth = 0.72
+  depth = 0.62
 ) {
   const nx = 36;
   const ny = 48;
 
-  // Helper for pouch profile thickness at vertical ratio v (0 bottom -> 1 top)
-  const getZProfile = (u: number, v: number): number => {
-    // u: 0 (left) to 1 (right)
-    // v: 0 (bottom) to 1 (top)
-    if (v >= 0.87) {
-      // Top crimp seal zone - thin and flat with micro crimp ridges
-      const crimpTeeth = Math.sin(u * 140) * 0.003;
-      return 0.035 + crimpTeeth;
+  // Gusset thickness function at vertical ratio v (0 bottom -> 1 top)
+  const getGussetDepth = (v: number): number => {
+    if (v >= 0.88) {
+      // Top crimp seal zone - flattened foil
+      return 0.04;
     }
+    const tv = v / 0.88;
+    // Smooth transition from flat crimp (tv = 1) down to full gusset expansion
+    const expand = Math.sin(Math.PI * Math.min(1.0, Math.pow(tv, 0.62)));
+    // Stand-up base is slightly wider for stability, belly peaks at tv ~ 0.35 - 0.45
+    const baseWiden = (1.0 - tv) * 0.12;
+    return depth * (0.82 * expand + 0.12 + baseWiden);
+  };
 
-    // Belly bulge curve
-    const tv = v / 0.87;
-    // Belly peaks around tv = 0.38 - 0.45 where spices settle
-    const vBulge = Math.sin(Math.PI * Math.pow(tv, 0.75)) * (1.0 - 0.22 * tv);
-    // Horizontal pillowing curve
-    const uBulge = Math.sin(Math.PI * u);
+  // Center belly bulge forward on front, backward on back
+  const getPillowBulge = (u: number, v: number): number => {
+    if (v >= 0.88) return 0;
+    const tv = v / 0.88;
+    const vFactor = Math.sin(Math.PI * Math.pow(tv, 0.72));
+    const uFactor = Math.sin(Math.PI * u);
+    return (depth * 0.22) * vFactor * Math.pow(uFactor, 0.75);
+  };
 
-    // Bottom base flare
-    let bottomFlare = 0;
-    if (v < 0.12) {
-      const tb = 1.0 - v / 0.12;
-      bottomFlare = Math.sin(Math.PI * u) * 0.08 * tb;
+  // Front Z position
+  const getFrontZ = (u: number, v: number): number => {
+    const halfG = getGussetDepth(v) * 0.5;
+    if (v >= 0.88) {
+      const crimpTeeth = Math.sin(u * 140) * 0.002;
+      return halfG + crimpTeeth;
     }
-
-    return (depth * 0.5) * vBulge * Math.pow(uBulge, 0.78) + 0.035 + bottomFlare;
+    return halfG + getPillowBulge(u, v);
   };
 
   // 1. FRONT GEOMETRY
@@ -55,7 +61,7 @@ export function createStandupPouchGeometries(
     for (let i = 0; i <= nx; i++) {
       const u = i / nx;
       const x = (u - 0.5) * width;
-      const z = getZProfile(u, v);
+      const z = getFrontZ(u, v);
       frontPos.push(x, y, z);
       frontUvs.push(u, v);
     }
@@ -89,9 +95,8 @@ export function createStandupPouchGeometries(
     for (let i = 0; i <= nx; i++) {
       const u = i / nx;
       const x = (u - 0.5) * width;
-      const z = getZProfile(u, v);
-      backPos.push(x, y, -z);
-      // Invert U so text on the back reads properly from left to right
+      const z = -getFrontZ(u, v);
+      backPos.push(x, y, z);
       backUvs.push(1 - u, v);
     }
   }
@@ -117,22 +122,23 @@ export function createStandupPouchGeometries(
   const leftPos: number[] = [];
   const leftUvs: number[] = [];
   const leftIdx: number[] = [];
-  const gussetSegs = 6;
+  const gussetSegs = 8;
 
   for (let j = 0; j <= ny; j++) {
     const v = j / ny;
     const y = (v - 0.5) * height;
-    const zFront = getZProfile(0, v);
+    const zFront = getFrontZ(0, v);
     const zBack = -zFront;
+    const gDepth = zFront - zBack;
 
     for (let i = 0; i <= gussetSegs; i++) {
       const gu = i / gussetSegs; // 0 at back, 1 at front
-      const curZ = zBack + gu * (zFront - zBack);
-      // Natural inward tuck of side gusset fold
+      const curZ = zBack + gu * gDepth;
+      // Inward V-crease fold typical of stand-up foil and kraft pouches
       let tuckX = -width * 0.5;
-      if (v < 0.87) {
-        const tv = v / 0.87;
-        const tuckAmt = Math.sin(Math.PI * gu) * (depth * 0.16) * Math.sin(Math.PI * tv);
+      if (v < 0.88) {
+        const tv = v / 0.88;
+        const tuckAmt = Math.sin(Math.PI * gu) * (gDepth * 0.16) * Math.sin(Math.PI * tv);
         tuckX += tuckAmt;
       }
       leftPos.push(tuckX, y, curZ);
@@ -165,16 +171,17 @@ export function createStandupPouchGeometries(
   for (let j = 0; j <= ny; j++) {
     const v = j / ny;
     const y = (v - 0.5) * height;
-    const zFront = getZProfile(1, v);
+    const zFront = getFrontZ(1, v);
     const zBack = -zFront;
+    const gDepth = zFront - zBack;
 
     for (let i = 0; i <= gussetSegs; i++) {
       const gu = i / gussetSegs; // 0 at front, 1 at back
-      const curZ = zFront - gu * (zFront - zBack);
+      const curZ = zFront - gu * gDepth;
       let tuckX = width * 0.5;
-      if (v < 0.87) {
-        const tv = v / 0.87;
-        const tuckAmt = Math.sin(Math.PI * gu) * (depth * 0.16) * Math.sin(Math.PI * tv);
+      if (v < 0.88) {
+        const tv = v / 0.88;
+        const tuckAmt = Math.sin(Math.PI * gu) * (gDepth * 0.16) * Math.sin(Math.PI * tv);
         tuckX -= tuckAmt;
       }
       rightPos.push(tuckX, y, curZ);
@@ -198,18 +205,35 @@ export function createStandupPouchGeometries(
   rightGeom.setIndex(rightIdx);
   rightGeom.computeVertexNormals();
 
-  // 5. TOP CRIMP SEAL CAP
+  // 5. BOTTOM BASE GEOMETRY (Closing bottom gusset)
+  const bottomGeom = new THREE.BufferGeometry();
+  const bZ = getGussetDepth(0) * 0.5;
+  const botPos: number[] = [
+    -width * 0.5, -height * 0.5, bZ,
+    width * 0.5, -height * 0.5, bZ,
+    width * 0.5, -height * 0.5, -bZ,
+    -width * 0.5, -height * 0.5, -bZ
+  ];
+  const botIdx = [0, 2, 1, 0, 3, 2];
+  const botUvs = [0, 1, 1, 1, 1, 0, 0, 0];
+  bottomGeom.setAttribute('position', new THREE.Float32BufferAttribute(botPos, 3));
+  bottomGeom.setAttribute('uv', new THREE.Float32BufferAttribute(botUvs, 2));
+  bottomGeom.setIndex(botIdx);
+  bottomGeom.computeVertexNormals();
+
+  // 6. TOP CRIMP SEAL CAP
   const topCapGeom = new THREE.BufferGeometry();
+  const tZ = 0.02;
   const topPos: number[] = [
-    -width * 0.5, height * 0.5, 0.035,
-    width * 0.5, height * 0.5, 0.035,
-    width * 0.5, height * 0.5, -0.035,
-    -width * 0.5, height * 0.5, -0.035
+    -width * 0.5, height * 0.5, tZ,
+    width * 0.5, height * 0.5, tZ,
+    width * 0.5, height * 0.5, -tZ,
+    -width * 0.5, height * 0.5, -tZ
   ];
   const topIdx = [0, 1, 2, 0, 2, 3];
   topCapGeom.setAttribute('position', new THREE.Float32BufferAttribute(topPos, 3));
   topCapGeom.setIndex(topIdx);
   topCapGeom.computeVertexNormals();
 
-  return { frontGeom, backGeom, leftGeom, rightGeom, topCapGeom };
+  return { frontGeom, backGeom, leftGeom, rightGeom, bottomGeom, topCapGeom };
 }

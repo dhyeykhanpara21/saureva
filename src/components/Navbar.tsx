@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, VolumeX, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 interface NavbarProps {
   onOpenInquiry: () => void;
@@ -8,8 +8,6 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-  const [audioCtx, setAudioCtx] = useState<AudioContext | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,59 +16,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Web Audio API ambient drone synthesizer (authentic warm Indian tanpura/acoustic harmony)
-  const toggleAmbientAudio = () => {
-    if (!isPlayingAudio) {
-      try {
-        const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
-        
-        // Root base note (D2 ~ 73.4Hz warm drone)
-        const osc1 = ctx.createOscillator();
-        const osc2 = ctx.createOscillator();
-        const osc3 = ctx.createOscillator();
-        const gainNode = ctx.createGain();
-
-        osc1.type = 'sine';
-        osc1.frequency.setValueAtTime(73.4, ctx.currentTime); // D2
-
-        osc2.type = 'triangle';
-        osc2.frequency.setValueAtTime(110.0, ctx.currentTime); // A2 (fifth)
-
-        osc3.type = 'sine';
-        osc3.frequency.setValueAtTime(146.8, ctx.currentTime); // D3 (octave)
-
-        // Subtle gentle low pass filter
-        const filter = ctx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(320, ctx.currentTime);
-
-        gainNode.gain.setValueAtTime(0.001, ctx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.06, ctx.currentTime + 3);
-
-        osc1.connect(filter);
-        osc2.connect(filter);
-        osc3.connect(filter);
-        filter.connect(gainNode);
-        gainNode.connect(ctx.destination);
-
-        osc1.start();
-        osc2.start();
-        osc3.start();
-
-        setAudioCtx(ctx);
-        setIsPlayingAudio(true);
-      } catch (e) {
-        console.error('Audio could not be initialized:', e);
-      }
-    } else {
-      if (audioCtx) {
-        audioCtx.close();
-        setAudioCtx(null);
-      }
-      setIsPlayingAudio(false);
-    }
-  };
 
   const navLinks = [
     { name: 'Home', href: '#hero' },
@@ -141,20 +86,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
 
           {/* Header Action Buttons */}
           <div className="hidden sm:flex items-center gap-3 xl:gap-4 shrink-0">
-            {/* Ambient Sound Toggle */}
-            <button
-              onClick={toggleAmbientAudio}
-              title={isPlayingAudio ? 'Mute ambient soundscape' : 'Play ambient Saurashtra soundscape'}
-              className="p-2 sm:p-2.5 rounded-full border border-saurena-gold/30 hover:border-saurena-gold text-saurena-forest hover:text-saurena-gold transition-colors duration-200 bg-white/40 backdrop-blur-sm shrink-0"
-              aria-label="Toggle ambient sound"
-            >
-              {isPlayingAudio ? (
-                <Volume2 className="w-4 h-4 text-saurena-gold animate-pulse" />
-              ) : (
-                <VolumeX className="w-4 h-4 text-saurena-forest/60" />
-              )}
-            </button>
-
             {/* Enquire Now CTA */}
             <button
               onClick={onOpenInquiry}
@@ -167,17 +98,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenInquiry }) => {
 
           {/* Mobile Menu Hamburger */}
           <div className="flex items-center gap-3 lg:hidden">
-            <button
-              onClick={toggleAmbientAudio}
-              className="p-2 rounded-full border border-saurena-gold/30 text-saurena-forest"
-              aria-label="Toggle audio"
-            >
-              {isPlayingAudio ? (
-                <Volume2 className="w-4 h-4 text-saurena-gold" />
-              ) : (
-                <VolumeX className="w-4 h-4 text-saurena-forest/60" />
-              )}
-            </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg text-saurena-forest hover:text-saurena-gold focus:outline-none"
